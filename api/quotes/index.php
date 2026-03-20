@@ -4,6 +4,11 @@ require_once '../config/Database.php';
 require_once '../config/headers.php';
 require_once '../../models/Quote.php';
 
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
+
 $database = new Database();
 $db = $database->connect();
 
