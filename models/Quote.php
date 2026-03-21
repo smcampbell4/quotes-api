@@ -102,7 +102,8 @@ class Quote {
 
     public function create() {
     $query = 'INSERT INTO ' . $this->table . ' (quote, author_id, category_id)
-              VALUES (:quote, :author_id, :category_id)';
+              VALUES (:quote, :author_id, :category_id)
+              RETURNING id';
 
     $stmt = $this->conn->prepare($query);
 
@@ -114,7 +115,13 @@ class Quote {
     $stmt->bindParam(':author_id', $this->author_id);
     $stmt->bindParam(':category_id', $this->category_id);
 
-    return $stmt->execute();
+    if ($stmt->execute()) {
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->id = $row['id'];
+        return true;
+    }
+
+    return false;
 }
 
 public function update() {

@@ -30,16 +30,23 @@ class Author {
     }
 
     public function create() {
-        $query = 'INSERT INTO ' . $this->table . ' (author)
-                  VALUES (:author)';
+    $query = 'INSERT INTO ' . $this->table . ' (author)
+              VALUES (:author)
+              RETURNING id';
 
-        $stmt = $this->conn->prepare($query);
+    $stmt = $this->conn->prepare($query);
 
-        $this->author = htmlspecialchars(strip_tags($this->author));
-        $stmt->bindParam(':author', $this->author);
+    $this->author = htmlspecialchars(strip_tags($this->author));
+    $stmt->bindParam(':author', $this->author);
 
-        return $stmt->execute();
+    if ($stmt->execute()) {
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->id = $row['id'];
+        return true;
     }
+
+    return false;
+}
 
     public function update() {
         $query = 'UPDATE ' . $this->table . '

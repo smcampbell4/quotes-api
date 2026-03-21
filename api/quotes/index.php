@@ -114,10 +114,11 @@ if ($method === 'GET') {
 
     if ($quote->create()) {
         echo json_encode(array(
-            'quote' => $quote->quote,
-            'author_id' => $quote->author_id,
-            'category_id' => $quote->category_id
-        ));
+    'id' => $quote->id,
+    'quote' => $quote->quote,
+    'author_id' => $quote->author_id,
+    'category_id' => $quote->category_id
+));
     } else {
         echo json_encode(array('message' => 'Quote Not Created'));
     }

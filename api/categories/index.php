@@ -69,8 +69,9 @@ if ($method === 'GET') {
 
     if ($category->create()) {
         echo json_encode(array(
-            'category' => $category->category
-        ));
+    'id' => $category->id,
+    'category' => $category->category
+));
     } else {
         echo json_encode(array('message' => 'category Not Created'));
     }

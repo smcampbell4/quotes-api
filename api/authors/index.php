@@ -69,8 +69,9 @@ if ($method === 'GET') {
 
     if ($author->create()) {
         echo json_encode(array(
-            'author' => $author->author
-        ));
+    'id' => $author->id,
+    'author' => $author->author
+));
     } else {
         echo json_encode(array('message' => 'author Not Created'));
     }
